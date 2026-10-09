@@ -1,0 +1,7 @@
+HTTP/1.1 400 Bad Request
+date: Tue, 22 Sep 2026 04:14:25 GMT
+server: uvicorn
+content-type: application/json
+mcp-session-id: 8a1a41a69d3d420d8f48d29119a81dca
+content-length: 116
+
