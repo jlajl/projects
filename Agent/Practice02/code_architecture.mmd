@@ -1,0 +1,27 @@
+graph TD;
+A[主程序入口] --> B[初始化工具]
+B --> C[获取当前日期和时间getDate]
+B --> D[获取当前工作目录getCwd]
+B --> E[列出指定目录下所有文件和子目录listDir]
+B --> F[获取指定文件的类型getFileType]
+B --> G[读取指定文件的内容readFile]
+B --> H[根据指定的目录和文件名创建新文件createFile]
+B --> I[编辑指定文件的内容editFile]
+B --> J[创建新目录createDir]
+B --> K[删除目录removeDir]
+B --> L[删除文件removeFile]
+B --> M[重命名文件和目录rename]
+
+C --> N[工具调用记录messages]
+D --> N
+E --> N
+F --> N
+G --> N
+H --> N
+I --> N
+J --> N
+K --> N
+L --> N
+M --> N
+
+style A fill:#f96,stroke:#333,stroke-width:4px
