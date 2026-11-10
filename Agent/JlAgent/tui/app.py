@@ -347,7 +347,12 @@ class JlAgentApp(App):
             return
         self._save_current_session()
         self.agent.reset()
-        inject_agents_md(self.agent, self.config.workspace)
+        inject_agents_md(
+            self.agent,
+            self.config.workspace,
+            self.config.agents_file,
+            self.config.agents_md_max_chars,
+        )
         self._session_id = self._session_store.new_id()
         self._thinking = None
         self.query_one("#conversation", VerticalScroll).remove_children()
@@ -439,7 +444,12 @@ class JlAgentApp(App):
             self._mount(ErrorMessage(f"恢复会话失败：{error}"))
             return
         self.agent.set_messages(messages)
-        inject_agents_md(self.agent, self.config.workspace)
+        inject_agents_md(
+            self.agent,
+            self.config.workspace,
+            self.config.agents_file,
+            self.config.agents_md_max_chars,
+        )
         self._session_id = summary.id
         self._thinking = None
         self.query_one("#conversation", VerticalScroll).remove_children()

@@ -5,9 +5,11 @@ __pycache__/
 .venv/
 venv/
 
-# 环境变量
+# 环境变量与密钥（真实密钥一律不入库，只提交 *.example）
 .env
 *.env
+!.env.example
+AnythingLLMServer/config.js
 
 # IDE
 .vscode/
@@ -18,7 +20,21 @@ venv/
 .DS_Store
 Thumbs.db
 
-# 临时文件
+# 临时文件 / 调试留存
 *.tmp
 *.log
 config.ini
+
+# 运行期产物（会话、上下文归档、技能创建目录）
+.agents/sessions/
+.agents/context/
+
+# 构建产物与二进制（不要入库，改为 Releases 分发）
+build/
+dist/
+installer/
+*.spec
+*.zip
+*.exe
+*.db
+*.pyz

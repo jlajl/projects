@@ -25,16 +25,27 @@
   </div>
   <pre id="status"></pre>
 
+  <script src="config.js"></script>
   <script>
-    const API_BASE = "http://localhost:3001/api";
-    const API_KEY = "CE9VTQ6-JJFMGWX-PTWDR0A-R7F231W";
-    const headers = { Authorization: `Bearer ${API_KEY}` };
+    // 密钥不落前端代码：复制 config.example.js 为 config.js 并填入自己的值，
+    // config.js 已被 .gitignore 忽略，不会进入版本库。
+    const config = window.ANYTHINGLLM_CONFIG || {};
+    const API_BASE = (config.apiBase || "http://localhost:3001/api").replace(/\/+$/, "");
+
+    function headers() {
+      if (!config.apiKey) {
+        throw new Error(
+          "未配置 API Key：请复制 config.example.js 为 config.js，并填写 apiKey 与 apiBase"
+        );
+      }
+      return { Authorization: "Bearer " + config.apiKey };
+    }
 
     let firstSlug = null;
 
     async function loadWorkspace() {
       try {
-        const res = await fetch(`${API_BASE}/v1/workspaces`, { headers });
+        const res = await fetch(`${API_BASE}/v1/workspaces`, { headers: headers() });
         const data = await res.json();
         const ws = data.workspaces && data.workspaces[0];
         if (!ws) throw new Error("没有可用工作区");
@@ -61,7 +72,7 @@
       try {
         const res = await fetch(`${API_BASE}/v1/document/upload`, {
           method: "POST",
-          headers,
+          headers: headers(),
           body: fd
         });
         const data = await res.json();

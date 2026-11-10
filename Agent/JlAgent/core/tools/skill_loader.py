@@ -3,14 +3,24 @@ from pathlib import Path
 from ..skills import Skill, SkillCatalog
 from .base import Tool
 
+# 单次读取的内容上限：技能说明可能很长，超出部分不直接灌进上下文，
+# 由模型改用 filename 精确读取需要的文件。
+MAX_CONTENT_CHARS = 20000
 
-def _read_text(path: Path, title: str) -> str:
+
+def _read_text(path: Path, title: str, max_chars: int = MAX_CONTENT_CHARS) -> str:
     try:
         content = path.read_text(encoding="utf-8-sig")
     except UnicodeDecodeError:
         return f"错误：{title} 不是 UTF-8 文本文件"
     except OSError as error:
         return f"错误：无法读取 {title}：{error}"
+    if max_chars > 0 and len(content) > max_chars:
+        content = (
+            f"{content[:max_chars]}\n\n"
+            f"…（内容已截断，完整文件共 {len(content)} 字符，上限 {max_chars}。"
+            "需要其余部分时请用 filename 读取具体文件）"
+        )
     return f"{title}:\n\n{content}"
 
 

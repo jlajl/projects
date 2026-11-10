@@ -96,7 +96,7 @@ npx @modelcontextprotocol/inspector python server.py
     "宠物医院": {
       "command": "python",
       "args": [
-        "D:/Project/pet-hospital-mcp-teaching-main/pet-hospital-mcp-teaching-main/mcp/server.py"
+        "D:/study/Projects/PetHospitalMCP/mcp/server.py"
       ],
       "env": {
         "PET_HOSPITAL_URL": "http://127.0.0.1:8080"
@@ -114,3 +114,10 @@ npx @modelcontextprotocol/inspector python server.py
 ## 错误处理
 
 REST 非 200 / 网络异常 / 库不存在时，`PetHospitalError` 会被 FastMCP 回传给 LLM，LLM 可看到错误文本并据此重试或改参数。例如未启动 pethospital 时调任意 tool 会得到「无法连接宠物医院 REST 服务…先启动 pethospital」。
+
+## 来源说明
+
+本目录的 `server.py` 与 `client.py` 随课程教学仓库 `PetHospitalMCP/pet-hospital-mcp-teaching-main/` 一同提供，
+本仓库未对其做功能改动（两者 SHA256 一致）；本 README 与其中的启动/验证步骤是在本仓库内重写的。
+底层 Go REST 服务与发行包同样来自该教学仓库，位于 `../pet-hospital-mcp-teaching-main/` 与
+`../pet-hospital-windows-amd64/`。

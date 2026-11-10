@@ -8,6 +8,8 @@ from .mcp_client import MCPClientManager, find_config_file, load_servers
 from .skills import SkillCatalog, build_system_prompt
 from .tools import build_registry
 
+AGENTS_MD_CANDIDATES = ("AGENTS.md", "AGENT.md")
+
 
 def create_agent(
     config: Config,
@@ -54,7 +56,9 @@ def create_agent(
         context_window=context_window,
         context_window_known=known,
     )
-    inject_agents_md(agent, config.workspace)
+    inject_agents_md(
+        agent, config.workspace, config.agents_file, config.agents_md_max_chars
+    )
     return agent
 
 
@@ -90,21 +94,43 @@ def bind_mcp_tools(agent: Agent) -> int:
     return len(new_tools)
 
 
-def read_agents_md(workspace: Path) -> str | None:
-    """读取项目目录下的 AGENTS.md，不存在或为空返回 None。"""
-    path = workspace / "AGENTS.md"
-    if not path.is_file():
-        return None
-    try:
-        content = path.read_text(encoding="utf-8-sig").strip()
-    except OSError:
-        return None
-    return content or None
+def read_agents_md(
+    workspace: Path, filename: str = "AGENTS.md", max_chars: int = 8000
+) -> str | None:
+    """读取工作目录下的长期规则文件，不存在或为空返回 None。
+
+    优先用配置指定的文件名，再回退到等价命名（AGENTS.md / AGENT.md），
+    因此重命名文件不必改代码。内容超过 max_chars 时截断（0 表示不截断）。
+    """
+    candidates = [filename] if filename else []
+    candidates.extend(name for name in AGENTS_MD_CANDIDATES if name not in candidates)
+    for name in candidates:
+        path = workspace / name
+        if not path.is_file():
+            continue
+        try:
+            content = path.read_text(encoding="utf-8-sig").strip()
+        except OSError:
+            return None
+        if not content:
+            continue
+        if max_chars > 0 and len(content) > max_chars:
+            content = (
+                f"{content[:max_chars]}\n\n"
+                f"…（{name} 已截断，原文共 {len(content)} 字符，上限 {max_chars}）"
+            )
+        return content
+    return None
 
 
-def inject_agents_md(agent: Agent, workspace: Path) -> bool:
-    """把 AGENTS.md 注入会话（仅在首次加载时，一次注入全程复用）。"""
-    content = read_agents_md(workspace)
+def inject_agents_md(
+    agent: Agent,
+    workspace: Path,
+    filename: str = "AGENTS.md",
+    max_chars: int = 8000,
+) -> bool:
+    """把长期规则注入会话（仅在首次加载时，一次注入全程复用）。"""
+    content = read_agents_md(workspace, filename, max_chars)
     if content is None:
         return False
     return agent.inject_agents_md(content)

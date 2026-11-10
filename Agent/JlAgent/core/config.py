@@ -25,6 +25,8 @@ DEFAULTS = {
         "max_steps": "8",
         "skills_dir": ".agents/skills",
         "system_prompt": "",
+        "agents_file": "AGENTS.md",
+        "agents_md_max_chars": "8000",
     },
     "search": {
         "baidu_api_key": "",
@@ -67,6 +69,9 @@ class Config:
     web_max_content_chars: int = 8000
     cli_exec_timeout: int = 30
     cli_max_stream_chars: int = 4000
+    # 长期规则文件名（自动兼容 AGENTS.md / AGENT.md）与注入时的长度上限
+    agents_file: str = "AGENTS.md"
+    agents_md_max_chars: int = 8000
 
 
 def default_config_path() -> Path:
@@ -122,6 +127,8 @@ def load_config(path: Path | str | None = None) -> Config:
         web_max_content_chars=_get_int(web["max_content_chars"], 8000),
         cli_exec_timeout=_get_int(cli["exec_timeout"], 30),
         cli_max_stream_chars=_get_int(cli["max_stream_chars"], 4000),
+        agents_file=agent["agents_file"].strip() or "AGENTS.md",
+        agents_md_max_chars=_get_int(agent["agents_md_max_chars"], 8000),
     )
 
 
@@ -182,6 +189,10 @@ max_steps = 8
 skills_dir = .agents/skills
 # 系统提示词，留空使用内置默认提示词
 system_prompt =
+# 长期规则文件名（留空则只用默认名），自动兼容 AGENTS.md / AGENT.md
+agents_file = AGENTS.md
+# 注入的长期规则最大字符数，超出部分截断（0 表示不截断）
+agents_md_max_chars = 8000
 
 [search]
 # 百度智能云搜索 API Key（留空则禁用联网搜索）
