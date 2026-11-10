@@ -1,0 +1,10 @@
+{
+  "mcpServers": {
+    "Bazi-MCP": {
+      "type": "stdio",
+      "command": "cmd",
+      "args": ["/c", "npx", "-y", "bazi-mcp"],
+      "env": { "PYTHONIOENCODING": "utf-8" }
+    }
+  }
+}

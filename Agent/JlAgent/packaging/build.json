@@ -1,0 +1,51 @@
+{
+  "name": "JlAgent",
+  "display_name": "JlAgent",
+  "version": "1.0.0",
+  "publisher": "JlAgent",
+  "entry": "run.py",
+  "pyinstaller": {
+    "onefile": true,
+    "windowed": false,
+    "console": true,
+    "clean": true,
+    "noconfirm": true,
+    "add_data": [
+      "config.ini:.",
+      "tui/app.tcss:tui"
+    ],
+    "hidden_import": [
+      "tui",
+      "tui.app",
+      "tui.messages",
+      "tui.screens",
+      "core",
+      "core.agent",
+      "core.bootstrap",
+      "core.config",
+      "core.events",
+      "core.llm",
+      "core.session",
+      "core.tools",
+      "mcp",
+      "mcp.client.streamable_http",
+      "mcp.client.stdio",
+      "anyio",
+      "httpx",
+      "pydantic",
+      "trafilatura",
+      "textual",
+      "rich"
+    ]
+  },
+  "platforms": {
+    "windows": {
+      "inno_setup": {
+        "create_desktop_icon": true,
+        "create_start_menu_icon": true,
+        "languages": ["chinesesimplified", "english"],
+        "compression": "lzma2/max"
+      }
+    }
+  }
+}

@@ -1,0 +1,186 @@
+Screen {
+    layout: vertical;
+}
+
+#body {
+    height: 1fr;
+}
+
+#chat {
+    width: 1fr;
+    height: 1fr;
+}
+
+#conversation {
+    height: 1fr;
+    padding: 0 1;
+    scrollbar-gutter: stable;
+}
+
+#capabilities {
+    width: 36;
+    height: 1fr;
+    padding: 0 1;
+    background: $surface;
+    border-left: solid $panel;
+}
+
+#capabilities.collapsed {
+    width: 6;
+    padding: 0;
+}
+
+#panel-toggle {
+    width: 1fr;
+    height: 1;
+    min-height: 1;
+    min-width: 0;
+    border: none;
+    padding: 0 1;
+    background: $boost;
+    color: $text;
+}
+
+#capability-content {
+    height: 1fr;
+}
+
+#capabilities.collapsed #capability-content {
+    display: none;
+}
+
+.welcome {
+    border: round $primary;
+    background: $surface;
+    padding: 1 2;
+    margin: 1 0;
+}
+
+.message {
+    padding: 0 1;
+    margin-top: 1;
+}
+
+.user-message {
+    border: round $accent;
+    background: $boost;
+}
+
+.assistant-message {
+    border: round $primary;
+}
+
+.system-message {
+    color: $text-muted;
+    padding: 0 1;
+    margin-top: 1;
+}
+
+.error-message {
+    border: round $error;
+    color: $error;
+}
+
+.thinking-block {
+    width: 1fr;
+    margin-top: 1;
+    background: $surface;
+    border: round $secondary;
+}
+
+.thinking-body {
+    height: auto;
+}
+
+.thought-text {
+    color: $text-muted;
+    padding: 0 1;
+    margin-top: 1;
+}
+
+.tool-call {
+    color: $text-muted;
+    padding: 0 2;
+    margin-top: 1;
+}
+
+.tool-result {
+    margin: 0 2;
+    background: $surface;
+}
+
+.tool-result-content {
+    padding: 0 1;
+    color: $text-muted;
+}
+
+.panel-title {
+    width: 1fr;
+    padding: 0 1;
+    margin-top: 1;
+    background: $boost;
+    color: $text;
+    text-style: bold;
+}
+
+.capability-item {
+    width: 1fr;
+    padding: 0 1;
+    margin-top: 1;
+}
+
+.capability-empty {
+    color: $text-muted;
+    padding: 0 1;
+    margin-top: 1;
+}
+
+#statusbar {
+    height: 1;
+    background: $panel;
+    padding: 0 1;
+}
+
+#state {
+    width: auto;
+}
+
+#context {
+    width: 1fr;
+    text-align: center;
+    color: $text;
+}
+
+#info {
+    width: auto;
+    text-align: right;
+    color: $text-muted;
+}
+
+#prompt {
+    margin: 0 1;
+}
+
+.slash-panel {
+    display: none;
+}
+
+.slash-panel.visible {
+    display: block;
+    height: auto;
+    max-height: 12;
+    margin: 0 1;
+    border: solid $secondary;
+    background: $surface;
+    scrollbar-gutter: stable;
+}
+
+#picker-title {
+    padding: 1 2;
+    background: $boost;
+}
+
+#session-list {
+    height: 1fr;
+    padding: 0 1;
+}
